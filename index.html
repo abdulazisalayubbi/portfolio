@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Abdul Azis Al Ayubbi — Senior Mobile Developer (Flutter)</title>
+  <meta name="description" content="Portfolio of Abdul Azis Al Ayubbi, Senior Mobile Developer (Flutter) at MedRoyale, building apps for iOS and Android.">
+  <meta name="theme-color" content="#D9F1FF">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<!-- ───────── SVG sprite: logos, icons, decorations ───────── -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="dart-logo" viewBox="0 0 502.87 502.87">
+      <polygon fill="#01579B" points="86.01,86.01 86.01,347.36 90,372 102.56,397 16.58,314.33 4,290 0,274.62 6.62,251.47"/>
+      <polygon fill="#40C4FF" points="86.01,86.01 244.92,6.62 274.66,0 293,4 311.03,16.58 397.01,102.56 376,89 350.7,85.98"/>
+      <polygon fill="#40C4FF" points="102.56,397 120,413.55 413.55,413.55 413.55,502.87 205.11,502.87"/>
+      <polygon fill="#29B6F6" points="86.01,86.01 413.55,413.55 120,413.55 102.56,397 90,372 86.01,347.36"/>
+      <polygon fill="#01579B" points="86.01,86.01 350.7,85.98 376,89 397.01,102.56 502.87,208.4 502.87,413.55 413.55,413.55"/>
+    </symbol>
+    <symbol id="flutter-logo" viewBox="0 0 100 123.8">
+      <polygon fill="#54C5F8" points="61.5,0 100,0 19.25,80.75 0,61.5"/>
+      <polygon fill="#54C5F8" points="61.5,57.1 100,57.1 47.4,109.7 28.15,90.45"/>
+      <polygon fill="#01579B" points="47.4,109.7 66.65,90.45 100,123.8 61.5,123.8"/>
+      <polygon fill="#29B6F6" points="28.15,90.45 47.4,71.2 66.65,90.45 47.4,109.7"/>
+    </symbol>
+    <symbol id="cloud" viewBox="0 0 120 50">
+      <path d="M20 46a16 16 0 0 1-2-31.9A22 22 0 0 1 59 9a17 17 0 0 1 28 9 14 14 0 0 1 13 28z"/>
+    </symbol>
+    <symbol id="sparkle" viewBox="0 0 24 24">
+      <path d="M12 0c.8 7 5 11.2 12 12-7 .8-11.200 5-12 12-.8-7-5-11.200-12-12 7-.8 11.200-5 12-12z"/>
+    </symbol>
+
+    <!-- line icons -->
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m3 7 9 6 9-6"/></g></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M22 16.920v3a2 2 0 0 1-2.180 2 19.790 19.790 0 0 1-8.630-3.070 19.500 19.500 0 0 1-6-6 19.790 19.790 0 0 1-3.070-8.670A2 2 0 0 1 4.110 2h3a2 2 0 0 1 2 1.720 12.840 12.840 0 0 0 .7 2.810 2 2 0 0 1-.45 2.110L8.090 9.910a16 16 0 0 0 6 6l1.270-1.270a2 2 0 0 1 2.110-.45 12.840 12.840 0 0 0 2.810.7A2 2 0 0 1 22 16.920z"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></g></symbol>
+    <symbol id="i-github" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 19c-5 1.500-5-2.500-7-3m14 6v-3.870a3.370 3.370 0 0 0-.94-2.610c3.140-.35 6.440-1.540 6.440-7A5.440 5.440 0 0 0 20 4.770 5.070 5.070 0 0 0 19.910 1S18.730.65 16 2.480a13.380 13.380 0 0 0-7 0C6.270.65 5.090 1 5.090 1A5.070 5.070 0 0 0 5 4.770a5.440 5.440 0 0 0-1.500 3.780c0 5.420 3.300 6.610 6.440 7A3.370 3.370 0 0 0 9 18.130V22"/></symbol>
+    <symbol id="i-linkedin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></g></symbol>
+    <symbol id="i-award" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></g></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><polygon fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.870"/><path d="M16 3.130a4 4 0 0 1 0 7.750"/></g></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.080V12a10 10 0 1 1-5.930-9.140"/><polyline points="22 4 12 14.01 9 11.01"/></g></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.300 15.300 0 0 1 4 10 15.300 15.300 0 0 1-4 10 15.300 15.300 0 0 1-4-10 15.300 15.300 0 0 1 4-10z"/></g></symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24"><polygon fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.700c.6.5 1 1.300 1 2.300h6c0-1 .4-1.800 1-2.300A7 7 0 0 0 12 2z"/></symbol>
+    <symbol id="i-trend" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></g></symbol>
+    <symbol id="i-mobile" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="3"/><line x1="12" y1="18" x2="12.01" y2="18"/></g></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></g></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path fill="currentColor" d="M20.840 4.610a5.500 5.500 0 0 0-7.780 0L12 5.670l-1.060-1.060a5.500 5.500 0 0 0-7.780 7.780l1.060 1.060L12 21.230l7.780-7.780 1.060-1.060a5.500 5.500 0 0 0 0-7.780z"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="3"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></g></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></g></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></g></symbol>
+    <symbol id="i-rotate" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.490 15a9 9 0 1 1-2.120-9.360L23 10"/></g></symbol>
+  </defs>
+</svg>
+
+<!-- The mascot is cloned into every .bird-slot by main.js -->
+<template id="bird-tpl">
+  <svg class="bird" viewBox="0 0 200 200" aria-hidden="true">
+    <ellipse cx="100" cy="189" rx="46" ry="6" fill="#0B2A4A" opacity=".1"/>
+    <g class="bird-body">
+      <ellipse cx="42" cy="150" rx="22" ry="9" transform="rotate(28 42 150)" fill="#3BAEE0"/>
+      <ellipse cx="40" cy="138" rx="20" ry="8" transform="rotate(8 40 138)" fill="#4BBDEB"/>
+      <path d="M86 168v14m-7 0h13M114 168v14m-7 0h13" fill="none" stroke="#F4A259" stroke-width="5" stroke-linecap="round"/>
+      <ellipse cx="42" cy="118" rx="16" ry="28" transform="rotate(18 42 118)" fill="#3BAEE0"/>
+      <g class="wing-r"><ellipse cx="160" cy="112" rx="16" ry="28" transform="rotate(-18 160 112)" fill="#3BAEE0"/></g>
+      <ellipse cx="88" cy="52" rx="6" ry="14" transform="rotate(-28 88 52)" fill="#4BBDEB"/>
+      <ellipse cx="112" cy="52" rx="6" ry="14" transform="rotate(28 112 52)" fill="#4BBDEB"/>
+      <ellipse cx="100" cy="46" rx="7" ry="16" fill="#4BBDEB"/>
+      <ellipse cx="100" cy="114" rx="64" ry="62" fill="#6FD0F7"/>
+      <ellipse cx="100" cy="138" rx="42" ry="34" fill="#EAF8FF"/>
+      <g class="eyes">
+        <circle cx="76" cy="100" r="17" fill="#0B8FA6"/><circle cx="76" cy="100" r="11.5" fill="#10212E"/><circle cx="72" cy="95" r="4.200" fill="#fff"/>
+        <circle cx="124" cy="100" r="17" fill="#0B8FA6"/><circle cx="124" cy="100" r="11.5" fill="#10212E"/><circle cx="120" cy="95" r="4.200" fill="#fff"/>
+      </g>
+      <path d="M89 113q11-7 22 0-5 13-11 14-6-1-11-14z" fill="#8B5A3C"/>
+      <ellipse cx="55" cy="122" rx="9" ry="5.5" fill="#FFB3CF" opacity=".8"/>
+      <ellipse cx="145" cy="122" rx="9" ry="5.5" fill="#FFB3CF" opacity=".8"/>
+    </g>
+  </svg>
+</template>
+
+<!-- ───────── Navigation ───────── -->
+<header class="nav" id="nav">
+  <a class="brand" href="#home" aria-label="Back to top">
+    <svg class="brand-mark"><use href="#dart-logo"/></svg>
+    <span>azis<b>.dart</b></span>
+  </a>
+  <nav class="nav-links" id="nav-links" aria-label="Sections">
+    <a href="#about">About</a>
+    <a href="#journey">Journey</a>
+    <a href="#projects">Projects</a>
+    <a href="#awards">Awards</a>
+    <a class="nav-cta" href="#contact">Say hello</a>
+  </nav>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<main>
+  <!-- ───────── Hero ───────── -->
+  <section class="hero" id="home">
+    <div class="sky" aria-hidden="true">
+      <svg class="cloud c1"><use href="#cloud"/></svg>
+      <svg class="cloud c2"><use href="#cloud"/></svg>
+      <svg class="cloud c3"><use href="#cloud"/></svg>
+      <svg class="cloud c4"><use href="#cloud"/></svg>
+      <svg class="spark s1"><use href="#sparkle"/></svg>
+      <svg class="spark s2"><use href="#sparkle"/></svg>
+      <svg class="spark s3"><use href="#sparkle"/></svg>
+      <svg class="spark s4"><use href="#sparkle"/></svg>
+    </div>
+
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="hello-pill reveal"><span class="wave" aria-hidden="true">👋</span> Hello, world!</p>
+        <h1 class="reveal" style="--d:.08s">I’m Abdul Azis <span class="grad">Al Ayubbi</span></h1>
+        <p class="role reveal" style="--d:.16s">
+          <svg class="role-mark" aria-hidden="true"><use href="#flutter-logo"/></svg>
+          <span>Senior Mobile Developer</span>
+          <span class="chip">Flutter @ MedRoyale</span>
+        </p>
+        <p class="lead reveal" style="--d:.24s">Building cross-platform apps with Flutter and Dart — currently owning the Flutter app for MedRoyale, a real-time 1v1 medical quiz platform on iOS and Android.</p>
+        <div class="cta reveal" style="--d:.32s">
+          <a class="btn primary" href="#projects">See my projects <svg class="ic"><use href="#i-arrow"/></svg></a>
+          <a class="btn ghost" href="#contact">Say hello</a>
+        </div>
+
+        <div class="code-card reveal" style="--d:.4s" aria-label="A Dart snippet introducing Azis">
+          <div class="code-top"><i></i><i></i><i></i><span>main.dart</span></div>
+<pre><code><span class="k">void</span> <span class="f">main</span>() =&gt; <span class="f">runApp</span>(
+  <span class="k">const</span> <span class="t">Azis</span>(
+    role: <span class="s">'Senior Mobile Developer'</span>,
+    at: <span class="s">'MedRoyale'</span>,
+    loves: [<span class="t">Flutter</span>, <span class="t">Dart</span>],
+  ),
+);</code></pre>
+        </div>
+      </div>
+
+      <div class="stage reveal" style="--d:.2s">
+        <div class="stage-glow" aria-hidden="true"></div>
+        <div class="stage-shadow" aria-hidden="true"></div>
+        <canvas id="dart3d" role="img" aria-label="A 3D Dart logo you can drag to spin"></canvas>
+        <svg class="dart-fallback" aria-hidden="true"><use href="#dart-logo"/></svg>
+
+        <span class="float-chip fc-flutter"><svg><use href="#flutter-logo"/></svg>Flutter</span>
+        <span class="float-chip fc-dart"><svg><use href="#dart-logo"/></svg>Dart</span>
+        <span class="float-chip fc-reload"><svg class="zap"><use href="#i-zap"/></svg>Hot reload</span>
+
+        <div class="bird-slot hero-bird waving" aria-hidden="true"></div>
+        <p class="stage-hint"><svg class="ic"><use href="#i-rotate"/></svg> drag me to spin</p>
+      </div>
+    </div>
+
+    <svg class="wave-divider" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 50C240 100 480 0 720 40s480-30 720 10v40H0z"/>
+    </svg>
+  </section>
+
+  <!-- ───────── About ───────── -->
+  <section class="section" id="about">
+    <div class="wrap">
+      <header class="section-head reveal">
+        <p class="eyebrow">// about_me.dart</p>
+        <h2>A little about me</h2>
+      </header>
+
+      <div class="about-grid">
+        <article class="card about-card reveal">
+          <div class="bird-slot about-bird" aria-hidden="true"></div>
+          <div>
+            <h3>Hi, I’m Azis!</h3>
+            <p class="now-line"><span class="now">Now</span> Senior Mobile Developer (Flutter) at MedRoyale · Jakarta, Indonesia</p>
+            <p>Azis is a dedicated mobile app developer with a keen eye for detail and excellent time management skills. He stays current with mobile development trends and actively participates in tech organizations.</p>
+            <p>Azis’ public speaking abilities and adaptability make him a valuable team member. He continually enhances his skills through ongoing training.</p>
+            <ul class="chips" aria-label="Toolbox">
+              <li><svg><use href="#flutter-logo"/></svg>Flutter</li>
+              <li><svg><use href="#dart-logo"/></svg>Dart</li>
+              <li>GetX</li>
+              <li>Firebase</li>
+              <li>Socket.IO</li>
+              <li>RevenueCat</li>
+              <li>Shorebird</li>
+              <li>Sentry</li>
+              <li>Patrol</li>
+              <li>REST APIs</li>
+              <li>iOS</li>
+              <li>Android</li>
+            </ul>
+          </div>
+        </article>
+
+        <div class="stats">
+          <div class="stat reveal" style="--tint:var(--sky);--d:.05s">
+            <svg class="ic"><use href="#i-code"/></svg>
+            <strong>1,500+</strong>
+            <span>commits on the MedRoyale Flutter app since joining</span>
+          </div>
+          <div class="stat reveal" style="--tint:var(--pink);--d:.12s">
+            <svg class="ic"><use href="#i-users"/></svg>
+            <strong>100</strong>
+            <span>interns managed, with 5 lab assistants and 15 mentors</span>
+          </div>
+          <div class="stat reveal" style="--tint:var(--mint);--d:.19s">
+            <svg class="ic"><use href="#i-send"/></svg>
+            <strong>13</strong>
+            <span>iOS, Android &amp; Flutter apps created through the study group</span>
+          </div>
+          <div class="stat reveal" style="--tint:var(--sun);--d:.26s">
+            <svg class="ic"><use href="#i-copy"/></svg>
+            <strong>95%</strong>
+            <span>code reusability between Android and iOS on GetCrew</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── Journey: education + experience ───────── -->
+  <section class="section tinted" id="journey">
+    <div class="wrap">
+      <header class="section-head reveal">
+        <p class="eyebrow">// journey.dart</p>
+        <h2>Education &amp; experience</h2>
+      </header>
+
+      <article class="card edu reveal">
+        <div class="edu-badge"><svg class="ic"><use href="#i-book"/></svg></div>
+        <div class="edu-main">
+          <p class="tag">Education · Sep 2021 – Nov 2025</p>
+          <h3>Telkom University</h3>
+          <p class="when">Informatics</p>
+          <ul class="ticks">
+            <li>Head of Study Group Research Assistant</li>
+            <li>Mentor for Flutter Mobile Developer at Mobile Innovation Laboratory</li>
+            <li>Earned a 5-star professional certification from BNSP reviewers by developing a scholarship application</li>
+            <li>Member of Mobile Innovation Laboratory and Proclub (Software Engineer division)</li>
+          </ul>
+        </div>
+        <svg class="edu-flutter" aria-hidden="true"><use href="#flutter-logo"/></svg>
+      </article>
+
+      <h3 class="sub-head reveal">Work &amp; organization experience</h3>
+
+      <ol class="timeline">
+        <li class="reveal">
+          <span class="node" style="--tint:var(--sky)"><svg class="ic"><use href="#i-zap"/></svg></span>
+          <article class="card">
+            <p class="tag">Full-time · London Area, United Kingdom · Remote</p>
+            <h3>MedRoyale</h3>
+            <div class="role-block">
+              <h4>Senior Mobile Developer (Flutter) <span class="now">Now</span></h4>
+              <p class="when">Jan 2026 – Present</p>
+              <p>Own the Flutter app for MedRoyale, a real-time 1v1 medical quiz platform for medical students and doctors on iOS and Android.</p>
+              <ul class="dots">
+                <li>Maintain and grow the codebase end to end: 1,500+ commits since joining, covering features, bug fixes and refactors.</li>
+                <li>Keep the code clean and maintainable: adopted very_good_analysis lints, moved models to freezed 4, built a typed API client, and split large controllers into smaller modules.</li>
+                <li>Improved app performance by cutting unnecessary widget rebuilds and loading work on the home screen, navigation and question history.</li>
+                <li>Refreshed the app’s UI with a new design system (shared text widgets, fonts, skeleton loading) and rolled it out to every page.</li>
+                <li>Rebuilt core features: real-time matches over Socket.IO, play-a-friend invites, the leaderboard, question history and comment threads.</li>
+                <li>Built subscriptions with RevenueCat, including premium-only presets and filters.</li>
+                <li>Ship updates with Shorebird code push, Firebase (Auth, FCM, Remote Config, Analytics) and Sentry, and cover key flows with unit tests and Patrol end-to-end regression tests.</li>
+              </ul>
+              <ul class="chips stack" aria-label="Stack"><li>Flutter</li><li>Dart</li><li>GetX</li><li>Dio</li><li>Socket.IO</li><li>Firebase</li><li>RevenueCat</li><li>Shorebird</li><li>Sentry</li><li>Patrol</li></ul>
+            </div>
+            <div class="role-block">
+              <h4>Junior Mobile Developer</h4>
+              <p class="when">Jan 2025 – Jan 2026</p>
+              <p>Joined to migrate the MedRoyale Flutter app from its legacy codebase to a new one.</p>
+              <ul class="dots">
+                <li>Refactored the legacy code from the ground up and migrated features from the old codebase to the new one.</li>
+                <li>Built the new UI from the Figma designs, including the new theme, dark mode, and SVG icons across onboarding, home, question history and the leaderboard.</li>
+                <li>Improved leaderboard performance and fixed a crash when the leaderboard held 10,000+ users.</li>
+                <li>Kept the code clean: removed unused code and imports, and kept controllers and views tidy as features moved over.</li>
+                <li>Moved subscriptions to the new RevenueCat SDK and made the subscription flow faster.</li>
+              </ul>
+              <ul class="chips stack" aria-label="Stack"><li>Flutter</li><li>Dart</li><li>GetX</li><li>Firebase</li><li>RevenueCat</li></ul>
+            </div>
+          </article>
+        </li>
+        <li class="reveal">
+          <span class="node" style="--tint:var(--mint)"><svg class="ic"><use href="#i-globe"/></svg></span>
+          <article class="card">
+            <p class="tag">Frontend Developer (Freelance) · Research Assistant</p>
+            <h3>CoE AILO, Telkom University</h3>
+            <p class="when">Jan 2024 – Mar 2025 · Bandung</p>
+            <ul class="dots">
+              <li>Designed and implemented the frontend for the SDGs Telkom University website, integrating machine learning systems that generate Sustainable Development Goals from the title and abstract of journal articles published by faculty and students.</li>
+              <li>Developed the website for the Artificial Intelligence Research Laboratory for Learning at Telkom University with React JS and Laravel, and produced comprehensive API documentation.</li>
+            </ul>
+          </article>
+        </li>
+        <li class="reveal">
+          <span class="node" style="--tint:var(--sky)"><svg class="ic"><use href="#i-mobile"/></svg></span>
+          <article class="card">
+            <p class="tag">Mobile Developer · Internship</p>
+            <h3>INDI Technology (PT Indi Teknokreasi Internasional)</h3>
+            <p class="when">Jan 2024 – Jul 2024 · East Jakarta</p>
+            <ul class="dots">
+              <li>Developed the job search application “GetCrew” using Flutter for Android and iOS, achieving a 40% increase in user satisfaction through an intuitive interface.</li>
+              <li>Contributed to cross-platform development, ensuring seamless operation on both Android and iOS, with over 95% code reusability between platforms.</li>
+              <li>Transitioned the GetCrew codebase to a more robust architecture using GetX, reducing app load times by 30% and enhancing overall performance.</li>
+              <li>Refactored the codebase with the MVC design pattern, leading to a 30% increase in code readability and a 25% reduction in bug-related rework.</li>
+            </ul>
+          </article>
+        </li>
+        <li class="reveal">
+          <span class="node" style="--tint:var(--peach)"><svg class="ic"><use href="#i-bulb"/></svg></span>
+          <article class="card">
+            <p class="tag">Mobile Developer · Part-time</p>
+            <h3>Kalorize</h3>
+            <p class="when">Jan 2024 – Jun 2024 · Remote</p>
+            <ul class="dots">
+              <li>Developed an AI-integrated mobile application that provides personalized nutrition recommendations, utilizing the MVC architecture for efficient maintenance and scalability.</li>
+              <li>Integrated APIs to connect the app with the backend for data retrieval, and incorporated machine learning APIs for precise nutrition analysis.</li>
+            </ul>
+          </article>
+        </li>
+        <li class="reveal">
+          <span class="node" style="--tint:var(--pink)"><svg class="ic"><use href="#i-users"/></svg></span>
+          <article class="card">
+            <p class="tag">Head of Study Group Division · Member Mobile Programming</p>
+            <h3>Mobile Innovation Laboratory, Telkom University</h3>
+            <p class="when">Nov 2021 – Sep 2025 · Bandung</p>
+            <ul class="dots">
+              <li>Developed a comprehensive study group curriculum for the digital business division, focusing on advanced UI/UX design principles and mobile programming languages such as Flutter, Kotlin, and Swift; resulting in a 40% increase in participant retention rates and a 25% improvement in project completion timelines.</li>
+              <li>Managed 100 interns, 5 lab assistants, and 15 mentors, resulting in the creation of 13 iOS, Android, and Flutter applications through the study group.</li>
+              <li>Mentored the Flutter study group, teaching interns the basics (widgets and navigation) ahead of the internal Motion Hack hackathon, and served as Liaison Officer for its participants.</li>
+            </ul>
+          </article>
+        </li>
+        <li class="reveal">
+          <span class="node" style="--tint:var(--lilac)"><svg class="ic"><use href="#i-heart"/></svg></span>
+          <article class="card">
+            <p class="tag">Mobile Developer · Freelance</p>
+            <h3>HUMIC Engineering Research Center</h3>
+            <p class="when">Aug 2023 – Dec 2023 · Bandung</p>
+            <ul class="dots">
+              <li>Developed Flutter applications with Bluetooth integration for EKG devices, leading a project that uses machine learning to analyze EKG signals for stroke prediction.</li>
+            </ul>
+          </article>
+        </li>
+        <li class="reveal">
+          <span class="node" style="--tint:var(--sun)"><svg class="ic"><use href="#i-trend"/></svg></span>
+          <article class="card">
+            <p class="tag">Solutions Engineering · Internship</p>
+            <h3>PT BFI Finance Indonesia, Tbk</h3>
+            <p class="when">May 2023 – Sep 2023 · Remote</p>
+            <ul class="dots">
+              <li>Revolutionized data accuracy and efficiency by crafting an API service to analyze vendor server data against BFI’s service usage, achieving a 5% improvement in accuracy and a 10% increase in operational efficiency.</li>
+            </ul>
+          </article>
+        </li>
+        <li class="reveal">
+          <span class="node" style="--tint:var(--mint)"><svg class="ic"><use href="#i-code"/></svg></span>
+          <article class="card">
+            <p class="tag">Software Engineer · Internship</p>
+            <h3>Proclub Telkom University</h3>
+            <p class="when">Feb 2023 – Jul 2023 · Remote</p>
+            <ul class="dots">
+              <li>Completed the probation period by developing the backend for Calmify, a mental health website for consulting with psychologists, including API documentation for the frontend team.</li>
+            </ul>
+          </article>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ───────── Projects ───────── -->
+  <section class="section" id="projects">
+    <div class="wrap">
+      <header class="section-head reveal">
+        <p class="eyebrow">// projects.dart</p>
+        <h2>Apps I’ve built</h2>
+      </header>
+
+      <div class="projects">
+        <article class="card project tilt reveal" style="--tint:var(--sky)">
+          <div class="project-art">
+            <div class="phone">
+              <svg viewBox="0 0 120 210" aria-hidden="true">
+                <rect width="120" height="210" fill="#F0F9FF"/>
+                <text x="12" y="30" class="p-title">MedRoyale</text>
+                <rect x="10" y="40" width="100" height="58" rx="12" fill="#fff" stroke="#CDE9FB" stroke-width="2"/>
+                <path d="M26 50l3 5 5-7 5 7 3-5v9H26z" fill="#FFD166"/>
+                <circle cx="34" cy="76" r="13" fill="#54C5F8"/><circle cx="34" cy="72" r="4.500" fill="#fff"/><path d="M26.500 84a7.500 7.500 0 0 1 15 0z" fill="#fff"/>
+                <circle cx="86" cy="76" r="13" fill="#FFB3CF"/><circle cx="86" cy="72" r="4.500" fill="#fff"/><path d="M78.500 84a7.500 7.500 0 0 1 15 0z" fill="#fff"/>
+                <text x="60" y="81" text-anchor="middle" class="p-vs">VS</text>
+                <rect x="10" y="106" width="100" height="6" rx="3" fill="#DFF2FE"/>
+                <rect class="grow" x="10" y="106" width="100" height="6" rx="3" fill="#29B6F6"/>
+                <rect x="10" y="120" width="100" height="24" rx="9" fill="#fff" stroke="#CDE9FB" stroke-width="2"/>
+                <rect x="18" y="129" width="62" height="6" rx="3" fill="#0B2A4A" opacity=".75"/>
+                <rect x="10" y="152" width="47" height="20" rx="8" fill="#7FE3CF"/>
+                <path d="m27 162 4 4 7-8" fill="none" stroke="#0B2A4A" stroke-width="2.500" stroke-linecap="round" stroke-linejoin="round"/>
+                <rect x="63" y="152" width="47" height="20" rx="8" fill="#fff" stroke="#CDE9FB" stroke-width="2"/>
+                <rect x="10" y="178" width="47" height="20" rx="8" fill="#fff" stroke="#CDE9FB" stroke-width="2"/>
+                <rect x="63" y="178" width="47" height="20" rx="8" fill="#fff" stroke="#CDE9FB" stroke-width="2"/>
+                <rect x="74" y="159.500" width="25" height="5" rx="2.500" fill="#CDE9FB"/><rect x="21" y="185.500" width="25" height="5" rx="2.500" fill="#CDE9FB"/><rect x="74" y="185.500" width="25" height="5" rx="2.500" fill="#CDE9FB"/>
+              </svg>
+            </div>
+          </div>
+          <div class="project-body">
+            <p class="tag">Medical education · Real-time · iOS &amp; Android</p>
+            <h3>MedRoyale <span class="now">Current</span></h3>
+            <p>A real-time 1v1 medical quiz platform for medical students and doctors. I own the Flutter app: real-time matches over Socket.IO, play-a-friend invites, the leaderboard, question history, comment threads, and RevenueCat subscriptions.</p>
+            <p class="ribbon"><svg class="ic"><use href="#i-zap"/></svg>Senior Mobile Developer (Flutter) — 1,500+ commits since joining</p>
+          </div>
+        </article>
+
+        <article class="card project tilt reveal" style="--tint:var(--peach);--d:.08s">
+          <div class="project-art">
+            <div class="phone">
+              <svg viewBox="0 0 120 210" aria-hidden="true">
+                <rect width="120" height="210" fill="#FFF7F1"/>
+                <text x="12" y="30" class="p-title">Kalorize</text>
+                <circle cx="60" cy="84" r="36" fill="none" stroke="#FFE3D1" stroke-width="10"/>
+                <circle class="ring" cx="60" cy="84" r="36" fill="none" stroke="#FF8A4C" stroke-width="10" stroke-linecap="round" stroke-dasharray="226" stroke-dashoffset="72" transform="rotate(-90 60 84)"/>
+                <path d="M60 76c-5-5-15-3-15 7 0 9 7 16 11 16 2 0 2.500-1 4-1s2 1 4 1c4 0 11-7 11-16 0-10-10-12-15-7z" fill="#FF6B6B"/>
+                <path d="M60 76c0-5 3-8 7-9-1 5-3 8-7 9z" fill="#34C3A6"/>
+                <rect x="10" y="138" width="100" height="10" rx="5" fill="#FFE3D1"/><rect x="10" y="138" width="72" height="10" rx="5" fill="#FF8A4C"/>
+                <rect x="10" y="158" width="100" height="10" rx="5" fill="#DDF6F0"/><rect x="10" y="158" width="52" height="10" rx="5" fill="#34C3A6"/>
+                <rect x="10" y="178" width="100" height="10" rx="5" fill="#FFEDBF"/><rect x="10" y="178" width="38" height="10" rx="5" fill="#FFB703"/>
+              </svg>
+            </div>
+          </div>
+          <div class="project-body">
+            <p class="tag">Nutrition · AI · Machine learning</p>
+            <h3>Kalorize</h3>
+            <p>An AI-integrated mobile application that provides personalized nutrition recommendations. Built on an MVC architecture for maintainability and scalability, with backend APIs for data and machine learning APIs for precise nutrition analysis.</p>
+            <p class="ribbon"><svg class="ic"><use href="#i-mobile"/></svg>Mobile Developer (part-time) — Jan to Jun 2024</p>
+          </div>
+        </article>
+
+        <article class="card project tilt reveal" style="--tint:var(--pink)">
+          <div class="project-art">
+            <div class="phone">
+              <svg viewBox="0 0 120 210" aria-hidden="true">
+                <rect width="120" height="210" fill="#FFF5F9"/>
+                <text x="12" y="30" class="p-title">Waveline</text>
+                <rect x="10" y="42" width="100" height="62" rx="12" fill="#fff" stroke="#FFD3E3" stroke-width="2"/>
+                <polyline class="ecg" points="16,76 34,76 40,58 48,94 56,66 61,76 74,76 80,62 86,88 91,76 104,76" fill="none" stroke="#F0619A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <rect x="10" y="114" width="100" height="26" rx="13" fill="#7FE3CF"/>
+                <text x="60" y="131.500" text-anchor="middle" class="p-pill">Normal</text>
+                <rect x="10" y="150" width="46" height="44" rx="11" fill="#fff" stroke="#FFD3E3" stroke-width="2"/>
+                <rect x="64" y="150" width="46" height="44" rx="11" fill="#fff" stroke="#FFD3E3" stroke-width="2"/>
+                <rect x="18" y="160" width="20" height="5" rx="2.5" fill="#FFB3CF"/><rect x="18" y="172" width="30" height="8" rx="4" fill="#0B2A4A" opacity=".8"/>
+                <rect x="72" y="160" width="20" height="5" rx="2.5" fill="#FFB3CF"/><rect x="72" y="172" width="26" height="8" rx="4" fill="#0B2A4A" opacity=".8"/>
+              </svg>
+            </div>
+          </div>
+          <div class="project-body">
+            <p class="tag">Health · Bluetooth · Machine learning</p>
+            <h3>Waveline</h3>
+            <p>An application for stroke detection using an EKG device, connected to the patient’s phone via Bluetooth. It detects stroke and reports it to the doctor on the website using machine learning and APIs.</p>
+            <p class="ribbon"><svg class="ic"><use href="#i-award"/></svg>APICTA Awards nominee — Health &amp; Wellbeing</p>
+          </div>
+        </article>
+
+        <article class="card project tilt reveal" style="--tint:var(--mint);--d:.08s">
+          <div class="project-art">
+            <div class="phone">
+              <svg viewBox="0 0 120 210" aria-hidden="true">
+                <rect width="120" height="210" fill="#F1FCF9"/>
+                <text x="12" y="30" class="p-title">Anarise</text>
+                <circle cx="60" cy="82" r="36" fill="#C9F4EA"/>
+                <path d="M42 100c0-24 14-38 38-38 0 24-14 38-38 38z" fill="#34C3A6"/>
+                <path d="M44 98 72 70" stroke="#F1FCF9" stroke-width="3" stroke-linecap="round"/>
+                <rect x="10" y="132" width="100" height="10" rx="5" fill="#DDF6F0"/>
+                <rect class="grow" x="10" y="132" width="72" height="10" rx="5" fill="#34C3A6"/>
+                <rect x="10" y="152" width="100" height="42" rx="12" fill="#fff" stroke="#C9F4EA" stroke-width="2"/>
+                <text x="22" y="179" class="p-big">+9%</text>
+                <rect x="66" y="166" width="34" height="5" rx="2.5" fill="#A7EBDD"/><rect x="66" y="176" width="24" height="5" rx="2.5" fill="#C9F4EA"/>
+              </svg>
+            </div>
+          </div>
+          <div class="project-body">
+            <p class="tag">Education · Biology</p>
+            <h3>Anarise</h3>
+            <p>Designed to help students of SMAN 1 Pengalengan learn biology — they increased their knowledge by 9% using the app. It also identifies their learning styles through an in-app questionnaire.</p>
+            <p class="ribbon"><svg class="ic"><use href="#i-award"/></svg>Runner-up — National Student Digital Innovation Competition, Digital Learning Innovation in Education</p>
+          </div>
+        </article>
+
+        <article class="card project tilt reveal" style="--tint:var(--sun)">
+          <div class="project-art">
+            <div class="phone">
+              <svg viewBox="0 0 120 210" aria-hidden="true">
+                <rect width="120" height="210" fill="#FFFAEC"/>
+                <text x="12" y="30" class="p-title">Daru</text>
+                <circle cx="60" cy="88" r="38" fill="none" stroke="#FFEDBF" stroke-width="10"/>
+                <circle class="ring" cx="60" cy="88" r="38" fill="none" stroke="#FFB703" stroke-width="10" stroke-linecap="round" stroke-dasharray="239" stroke-dashoffset="72" transform="rotate(-90 60 88)"/>
+                <circle cx="60" cy="88" r="20" fill="#FFD166"/>
+                <text x="60" y="94" text-anchor="middle" class="p-coin">Rp</text>
+                <rect x="10" y="144" width="100" height="22" rx="11" fill="#fff" stroke="#FFEDBF" stroke-width="2"/>
+                <rect x="18" y="152" width="44" height="6" rx="3" fill="#FFD166"/>
+                <rect x="10" y="172" width="100" height="22" rx="11" fill="#fff" stroke="#FFEDBF" stroke-width="2"/>
+                <rect x="18" y="180" width="30" height="6" rx="3" fill="#FFD166"/>
+              </svg>
+            </div>
+          </div>
+          <div class="project-body">
+            <p class="tag">Finance · Emergency fund</p>
+            <h3>Daru</h3>
+            <p>Helps students manage and save their money with the goal of creating an emergency fund — a practical, easy-to-use tool for planning and saving regularly to handle unexpected emergencies.</p>
+            <p class="ribbon"><svg class="ic"><use href="#i-award"/></svg>Runner-up — Mini Hackathon Challenge, PT BFI Finance × Arkavidia ITB</p>
+          </div>
+        </article>
+
+        <article class="card project tilt reveal" style="--tint:var(--lilac);--d:.08s">
+          <div class="project-art">
+            <div class="phone">
+              <svg viewBox="0 0 120 210" aria-hidden="true">
+                <rect width="120" height="210" fill="#F7F4FF"/>
+                <text x="12" y="30" class="p-title">Thriftmee</text>
+                <rect x="10" y="42" width="100" height="110" rx="14" fill="#E6DFFF"/>
+                <path d="M60 60v-4a5 5 0 1 0-5-5" fill="none" stroke="#6B55C9" stroke-width="3" stroke-linecap="round"/>
+                <path d="M44 66 60 60l16 6 16 12-9 12-7-5v44H44V85l-7 5-9-12z" fill="#8F7BEA"/>
+                <path d="M51 63.500q9 9 18 0" fill="none" stroke="#F7F4FF" stroke-width="3" stroke-linecap="round"/>
+                <g fill="#fff"><use href="#sparkle" x="88" y="50" width="12" height="12"/><use href="#sparkle" x="20" y="112" width="9" height="9"/></g>
+                <circle cx="24" cy="174" r="10" fill="#8F7BEA"/><circle cx="50" cy="174" r="10" fill="#FFB3CF"/><circle cx="76" cy="174" r="10" fill="#7FE3CF"/>
+                <circle cx="24" cy="174" r="14" fill="none" stroke="#8F7BEA" stroke-width="2"/>
+              </svg>
+            </div>
+          </div>
+          <div class="project-body">
+            <p class="tag">Fashion · Virtual fitting room</p>
+            <h3>Thriftmee</h3>
+            <p>A virtual fitting room where users try on clothes without visiting the store. It was available on the Play Store; its API was deactivated after the Program Kreativitas Mahasiswa (PKM) event ended.</p>
+            <p class="ribbon"><svg class="ic"><use href="#i-award"/></svg>PIMNAS 36 funding awardee — Rp&nbsp;7.500.000</p>
+          </div>
+        </article>
+      </div>
+
+      <h3 class="sub-head reveal">More things I’ve built</h3>
+      <div class="awards">
+        <article class="card award reveal" style="--tint:var(--sky)"><span class="medal"><svg class="ic"><use href="#i-bulb"/></svg></span><p class="tag">Flutter · IoT</p><h3>Hestia IoT</h3><p>Turn lights and AC on remotely and manage buildings and floors, using motion and temperature sensors.</p></article>
+        <article class="card award reveal" style="--tint:var(--mint);--d:.06s"><span class="medal"><svg class="ic"><use href="#i-heart"/></svg></span><p class="tag">Flutter · Hackathon</p><h3>Easy Gizi</h3><p>“Easy for Nutrition”: consult nutrition experts and check your BMI. Built in a 3-day Motion Lab hackathon.</p></article>
+        <article class="card award reveal" style="--tint:var(--lilac);--d:.12s"><span class="medal"><svg class="ic"><use href="#i-globe"/></svg></span><p class="tag">Frontend · Machine learning</p><h3>SDGs Telkom University</h3><p>A website that maps journal articles to Sustainable Development Goals from their title and abstract.</p></article>
+        <article class="card award reveal" style="--tint:var(--pink);--d:.18s"><span class="medal"><svg class="ic"><use href="#i-code"/></svg></span><p class="tag">Backend · API</p><h3>Calmify</h3><p>API service for a mental health platform where users talk and consult with psychologists.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── Awards ───────── -->
+  <section class="section tinted" id="awards">
+    <div class="wrap">
+      <header class="section-head with-art reveal">
+        <div>
+          <p class="eyebrow">// awards.dart</p>
+          <h2>Certificates &amp; awards</h2>
+          <p class="section-sub">A few bullseyes along the way.</p>
+        </div>
+        <svg class="dartboard" viewBox="0 0 170 170" aria-hidden="true">
+          <ellipse cx="85" cy="160" rx="52" ry="6" fill="#0B2A4A" opacity=".08"/>
+          <circle cx="82" cy="84" r="70" fill="#01579B"/>
+          <circle cx="82" cy="84" r="59" fill="#fff"/>
+          <circle cx="82" cy="84" r="47" fill="#54C5F8"/>
+          <circle cx="82" cy="84" r="34" fill="#fff"/>
+          <circle cx="82" cy="84" r="21" fill="#29B6F6"/>
+          <circle cx="82" cy="84" r="9" fill="#FF8FB8"/>
+          <g class="dart-fly">
+            <path d="M82 84 104 62" stroke="#4D6782" stroke-width="3" stroke-linecap="round"/>
+            <path d="M102 64 128 38" stroke="#0175C2" stroke-width="9" stroke-linecap="round"/>
+            <path d="M126 40 142 24" stroke="#01579B" stroke-width="4" stroke-linecap="round"/>
+            <path d="M138 28 144 8l12 6z" fill="#FFD166"/>
+            <path d="M138 28 162 26l-6-12z" fill="#FFB3CF"/>
+          </g>
+        </svg>
+      </header>
+
+      <div class="awards">
+        <article class="card award reveal" style="--tint:var(--sun)"><span class="medal"><svg class="ic"><use href="#i-star"/></svg></span><h3>Top 1 Outstanding Informatics Student</h3><p>Telkom University · Nov 2025. Also named Outstanding Student by the Faculty of Informatics</p></article>
+        <article class="card award reveal" style="--tint:var(--sky);--d:0.06s"><span class="medal"><svg class="ic"><use href="#i-award"/></svg></span><h3>Top 2 Outstanding Student</h3><p>Telkom University · Nov 2025</p></article>
+        <article class="card award reveal" style="--tint:var(--pink);--d:0.12s"><span class="medal"><svg class="ic"><use href="#i-heart"/></svg></span><h3>Healthkathon Finalist</h3><p>Kementerian Kesehatan · Oct 2025</p></article>
+        <article class="card award reveal" style="--tint:var(--mint);--d:0.18s"><span class="medal"><svg class="ic"><use href="#i-zap"/></svg></span><h3>Top 5 LIDM, 2024 &amp; 2025</h3><p>National Student Digital Innovation Competition (LIDM)</p></article>
+        <article class="card award reveal" style="--tint:var(--sky)"><span class="medal"><svg class="ic"><use href="#i-globe"/></svg></span><h3>APICTA 2023 Nominee</h3><p>Asia Pacific ICT Alliance Awards, Health and WellBeing category, with Waveline</p></article>
+        <article class="card award reveal" style="--tint:var(--sun);--d:0.06s"><span class="medal"><svg class="ic"><use href="#i-star"/></svg></span><h3>Top 20 Outstanding Students</h3><p>In the field of Student Affairs, Telkom University · Jan 2024</p></article>
+        <article class="card award reveal" style="--tint:var(--pink);--d:0.12s"><span class="medal"><svg class="ic"><use href="#i-users"/></svg></span><h3>Outstanding Team</h3><p>Student Affairs category: Science and Technology · Jan 2024</p></article>
+        <article class="card award reveal" style="--tint:var(--mint);--d:0.18s"><span class="medal"><svg class="ic"><use href="#i-check"/></svg></span><h3>BNSP <span class="nb">5-Star</span> Certification</h3><p>Junior Mobile Programmer, earned by developing a scholarship application</p></article>
+        <article class="card award reveal" style="--tint:var(--lilac)"><span class="medal"><svg class="ic"><use href="#i-bulb"/></svg></span><h3>PIMNAS 35 Funding Award</h3><p>Innovative Karya scheme</p></article>
+        <article class="card award reveal" style="--tint:var(--peach);--d:0.06s"><span class="medal"><svg class="ic"><use href="#i-award"/></svg></span><h3>PIMNAS 36 Funding Awardee</h3><p>Rp&nbsp;7.500.000, with Thriftmee</p></article>
+        <article class="card award reveal" style="--tint:var(--sun);--d:0.12s"><span class="medal"><svg class="ic"><use href="#i-award"/></svg></span><h3>Runner-up, LIDM National</h3><p>Digital Learning Innovation in Education, with Anarise</p></article>
+        <article class="card award reveal" style="--tint:var(--sky);--d:0.18s"><span class="medal"><svg class="ic"><use href="#i-zap"/></svg></span><h3>Runner-up, Mini Hackathon</h3><p>PT BFI Finance × Arkavidia ITB, with Daru</p></article>
+      </div>
+
+      <h3 class="sub-head reveal">Courses &amp; certifications</h3>
+      <ul class="chips certs reveal">
+        <li>Microsoft Azure AI Fundamentals</li>
+        <li>Artificial Intelligence — Digital Talent Scholarship</li>
+        <li>Belajar Machine Learning untuk Pemula — Dicoding</li>
+        <li>Belajar Dasar AI — Dicoding</li>
+        <li>Belajar Dasar Visualisasi Data — Dicoding</li>
+        <li>Memulai Pemrograman dengan Python — Dicoding</li>
+        <li>Belajar Membuat Aplikasi Flutter untuk Pemula — Dicoding</li>
+        <li>Memulai Pemrograman dengan Dart — Dicoding</li>
+        <li>Memulai Prinsip Pemrograman SOLID — Dicoding</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ───────── Contact ───────── -->
+  <section class="section" id="contact">
+    <div class="wrap">
+      <div class="contact-card reveal">
+        <svg class="cloud cc1" aria-hidden="true"><use href="#cloud"/></svg>
+        <svg class="cloud cc2" aria-hidden="true"><use href="#cloud"/></svg>
+        <div class="contact-copy">
+          <p class="eyebrow light">// contact.dart</p>
+          <h2>Thank you!</h2>
+          <p class="contact-lead">Want to build something together? My inbox is always open.</p>
+          <ul class="contact-list">
+            <li><a href="mailto:abdulazisalayubbi@gmail.com"><svg class="ic"><use href="#i-mail"/></svg><span><small>Email</small>abdulazisalayubbi@gmail.com</span></a></li>
+            <li><a href="tel:+6285893164214"><svg class="ic"><use href="#i-phone"/></svg><span><small>Phone</small>+62 858-9316-4214</span></a></li>
+            <li><a href="https://github.com/abdulazisalayubbi" target="_blank" rel="noopener"><svg class="ic"><use href="#i-github"/></svg><span><small>GitHub</small>abdulazisalayubbi</span></a></li>
+            <li><a href="https://www.linkedin.com/in/abdul-azis-alayubbi/" target="_blank" rel="noopener"><svg class="ic"><use href="#i-linkedin"/></svg><span><small>LinkedIn</small>abdul-azis-alayubbi</span></a></li>
+            <li class="plain"><span class="row"><svg class="ic"><use href="#i-pin"/></svg><span><small>Address</small>Duri Selatan, Jakarta Barat</span></span></li>
+          </ul>
+        </div>
+        <div class="bird-slot contact-bird waving" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>
+    <svg aria-hidden="true"><use href="#flutter-logo"/></svg>
+    Made with <svg class="heart" aria-label="love"><use href="#i-heart"/></svg> and a lot of Flutter spirit · © <span id="year">2026</span> Abdul Azis Al Ayubbi
+  </p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script src="js/dart3d.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
