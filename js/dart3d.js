@@ -185,7 +185,7 @@
   function frame() {
     requestAnimationFrame(frame);
     var dt = Math.min(clock.getDelta(), 0.05);
-    if (!visible) return;
+    if (!visible || root.classList.contains('intro-on')) return; // off-screen, or hidden behind the intro splash
     var t = clock.elapsedTime;
 
     if (!dragging) {

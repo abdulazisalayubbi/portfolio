@@ -11,7 +11,18 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <script>document.documentElement.classList.add('js');</script>
+  <script>
+    // Decide before first paint whether the intro mini-game should cover the page.
+    (function () {
+      var root = document.documentElement;
+      root.classList.add('js');
+      var seen = false;
+      try { seen = sessionStorage.getItem('azis-intro-seen') === '1'; } catch (e) { /* storage blocked */ }
+      var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var deepLink = location.hash.length > 1 && location.hash !== '#home';
+      if (!seen && !calm && !deepLink) root.classList.add('intro-on');
+    })();
+  </script>
 </head>
 <body>
 
@@ -88,6 +99,67 @@
     </g>
   </svg>
 </template>
+
+<!-- ───────── Intro splash: throw darts to "build" the site (js/intro.js) ───────── -->
+<div class="intro" id="intro" role="dialog" aria-modal="true" aria-labelledby="intro-title">
+  <div class="sky" aria-hidden="true">
+    <svg class="cloud c1"><use href="#cloud"/></svg>
+    <svg class="cloud c2"><use href="#cloud"/></svg>
+    <svg class="cloud c3"><use href="#cloud"/></svg>
+    <svg class="cloud c4"><use href="#cloud"/></svg>
+    <svg class="spark s2"><use href="#sparkle"/></svg>
+    <svg class="spark s3"><use href="#sparkle"/></svg>
+  </div>
+
+  <div class="intro-top">
+    <span class="brand">
+      <svg class="brand-mark" aria-hidden="true"><use href="#dart-logo"/></svg>
+      <span>azis<b>.dart</b></span>
+    </span>
+    <button class="intro-skip" id="intro-skip" type="button">Skip intro <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+  </div>
+
+  <div class="intro-body">
+    <p class="eyebrow">$ flutter run portfolio</p>
+    <h2 class="intro-title" id="intro-title">Throw a dart to <span class="grad">build this app</span></h2>
+
+    <div class="intro-stage" id="intro-stage" role="button" tabindex="0" aria-label="Throw a dart">
+      <svg class="intro-board" id="intro-board" viewBox="0 0 240 240" aria-hidden="true">
+        <ellipse cx="120" cy="232" rx="74" ry="7" fill="#0B2A4A" opacity=".08"/>
+        <circle cx="120" cy="126" r="100" fill="#01447A"/>
+        <circle cx="120" cy="120" r="100" fill="#01579B"/>
+        <circle cx="120" cy="120" r="85" fill="#fff"/>
+        <circle cx="120" cy="120" r="68" fill="#54C5F8"/>
+        <circle cx="120" cy="120" r="50" fill="#fff"/>
+        <circle cx="120" cy="120" r="32" fill="#29B6F6"/>
+        <circle cx="120" cy="120" r="14" fill="#FF8FB8"/>
+        <g id="intro-darts"></g>
+        <g class="intro-aim" id="intro-aim" transform="translate(120 24)">
+          <circle r="13" fill="none" stroke="#fff" stroke-width="6.5"/>
+          <path d="M-22 0h10M12 0h10M0-22v10M0 12v10" stroke="#fff" stroke-width="6.5" stroke-linecap="round"/>
+          <circle r="13" fill="none" stroke="#0B2A4A" stroke-width="2.8"/>
+          <path d="M-22 0h10M12 0h10M0-22v10M0 12v10" stroke="#0B2A4A" stroke-width="2.8" stroke-linecap="round"/>
+          <circle r="3" fill="#FF4F8B"/>
+        </g>
+      </svg>
+      <span class="bird-slot intro-bird waving" id="intro-bird" aria-hidden="true"></span>
+    </div>
+
+    <div class="intro-build">
+      <div class="intro-build-row">
+        <span id="intro-status" role="status">Waiting for your first dart…</span>
+        <span class="intro-count" id="intro-count">0 darts</span>
+      </div>
+      <div class="intro-bar"><i id="intro-fill"></i></div>
+    </div>
+
+    <p class="intro-hint">
+      <span class="keys">Click anywhere or press <kbd>Space</kbd> to throw.</span>
+      <span class="touch">Tap anywhere to throw.</span>
+      The closer to the bullseye, the faster the build.
+    </p>
+  </div>
+</div>
 
 <!-- ───────── Navigation ───────── -->
 <header class="nav" id="nav">
@@ -638,10 +710,12 @@
     <svg aria-hidden="true"><use href="#flutter-logo"/></svg>
     Made with <svg class="heart" aria-label="love"><use href="#i-heart"/></svg> and a lot of Flutter spirit · © <span id="year">2026</span> Abdul Azis Al Ayubbi
   </p>
+  <div><button class="replay" id="intro-replay" type="button"><svg class="ic" aria-hidden="true"><use href="#i-rotate"/></svg> Replay the intro game</button></div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <script src="js/dart3d.js"></script>
 <script src="js/main.js"></script>
+<script src="js/intro.js"></script>
 </body>
 </html>
