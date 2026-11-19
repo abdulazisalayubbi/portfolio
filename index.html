@@ -117,7 +117,7 @@
       <path d="M89 113q11-7 22 0-5 13-11 14-6-1-11-14z" fill="#8B5A3C"/>
       <ellipse cx="55" cy="122" rx="9" ry="5.5" fill="#FFB3CF" opacity=".8"/>
       <ellipse cx="145" cy="122" rx="9" ry="5.5" fill="#FFB3CF" opacity=".8"/>
-      <!-- accessories, switched on per slot with .pose-grad / .pose-medal -->
+      <!-- accessories, switched on per slot with .pose-grad / .pose-medal / .pose-suit -->
       <g class="acc acc-cap" transform="rotate(-7 100 46)">
         <path class="cap-base" d="M72 46v15q28 11 56 0V46z" fill="#163E66"/>
         <path class="cap-top" d="M100 22 154 42 100 62 46 42z" fill="#0B2A4A"/>
@@ -129,6 +129,18 @@
         <path d="M73 126 100 150 127 126" fill="none" stroke="#FF8FB8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
         <circle cx="100" cy="158" r="14" fill="#FFD166" stroke="#F2B93B" stroke-width="3"/>
         <polygon points="100,149.5 102.6,154.8 108.5,155.7 104.3,159.8 105.3,165.7 100,162.9 94.7,165.7 95.7,159.8 91.5,155.7 97.4,154.8" fill="#fff"/>
+      </g>
+      <g class="acc acc-suit">
+        <path class="suit-coat" d="M38.800 132A64 62 0 0 0 161.200 132Q100 128 38.800 132z" fill="#163E66"/>
+        <path d="M80 129.800h40L100 166z" fill="#fff"/>
+        <path class="suit-lapel" d="M80 130.200 100 166l-9-2L68 131.200z" fill="#0B2A4A"/>
+        <path class="suit-lapel" d="M120 130.200 100 166l9-2 23-32.800z" fill="#0B2A4A"/>
+        <path d="M94.500 131h11l-3 7h-5z" fill="#D9457F"/>
+        <path d="M97.500 138h5l3.500 15-6 7-6-7z" fill="#F0619A"/>
+        <path d="M82 129.800 96 131.500 89 141z" fill="#fff" stroke="#CDE9FB" stroke-width="1.200" stroke-linejoin="round"/>
+        <path d="M118 129.800 104 131.500 111 141z" fill="#fff" stroke="#CDE9FB" stroke-width="1.200" stroke-linejoin="round"/>
+        <circle cx="100" cy="171" r="2.600" fill="#FFD166"/>
+        <path d="M127 147h11v3.500h-11z" fill="#EAF8FF"/>
       </g>
     </g>
   </svg>
@@ -240,6 +252,7 @@
         <div class="cta reveal" style="--d:.32s">
           <a class="btn primary" href="#projects">See my projects <svg class="ic"><use href="#i-arrow"/></svg></a>
           <a class="btn ghost" href="#contact">Say hello</a>
+          <a class="btn ghost cv-btn" href="https://drive.google.com/file/d/1PIjHN0nIiztge7N6w1wuKwKNK6B8_LlT/view" target="_blank" rel="noopener" data-cv>View my CV</a>
         </div>
 
         <div class="code-card reveal" style="--d:.4s" id="live-code" role="group" aria-label="A Dart snippet introducing Azis. Tap an underlined value to change it and hot reload this page.">
@@ -266,6 +279,7 @@
         <span class="float-chip fc-dart"><svg><use href="#dart-logo"/></svg>Dart</span>
         <span class="float-chip fc-reload" id="live-chip-reload"><svg class="zap"><use href="#i-zap"/></svg>Hot reload</span>
 
+        <div class="stage-cv"><a class="btn wood" href="https://drive.google.com/file/d/1PIjHN0nIiztge7N6w1wuKwKNK6B8_LlT/view" target="_blank" rel="noopener" data-cv>View my CV</a></div>
         <div class="bird-slot hero-bird waving" aria-hidden="true" data-say="Hi! I’m the build bird. Drag the Dart logo to spin it.|Psst… try the DEBUG ribbon in the corner.|setState(() =&gt; mood = Mood.happy);"></div>
         <p class="stage-hint"><svg class="ic"><use href="#i-rotate"/></svg> drag me to spin</p>
       </div>
@@ -786,6 +800,28 @@
   </div>
 </dialog>
 
+<!-- ───────── CV popup: the "View my CV" buttons open it (js/cv.js) ───────── -->
+<dialog class="demo cv-pop" id="cv-pop" aria-labelledby="cv-title">
+  <div class="demo-box cv-box">
+    <div class="demo-head">
+      <div>
+        <p class="eyebrow">// cv.pdf</p>
+        <h2 id="cv-title">My CV</h2>
+      </div>
+      <button class="demo-close" id="cv-close" type="button" aria-label="Close CV"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>
+    </div>
+    <div class="cv-side">
+      <p class="cv-say">Suit on, tie straight. Here’s the CV!</p>
+      <div class="bird-slot cv-bird pose-suit waving" aria-hidden="true"></div>
+    </div>
+    <div class="cv-paper">
+      <p class="cv-loading">Fetching the CV…</p>
+      <iframe id="cv-frame" title="CV of Abdul Azis Al Ayubbi (PDF)" data-src="https://drive.google.com/file/d/1PIjHN0nIiztge7N6w1wuKwKNK6B8_LlT/preview"></iframe>
+    </div>
+    <a class="btn ghost cv-open" href="https://drive.google.com/file/d/1PIjHN0nIiztge7N6w1wuKwKNK6B8_LlT/view" target="_blank" rel="noopener">Open in a new tab <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+  </div>
+</dialog>
+
 <!-- Flutter-style debug banner: toggles "debug paint" (js/play.js) -->
 <button class="debug-ribbon" id="debug-ribbon" type="button" aria-pressed="false" aria-label="Debug: toggle debug paint" title="Toggle debug paint (or press P)"><span>DEBUG</span></button>
 
@@ -796,5 +832,6 @@
 <script src="js/intro.js"></script>
 <script src="js/hotreload.js"></script>
 <script src="js/demos.js"></script>
+<script src="js/cv.js"></script>
 </body>
 </html>

@@ -341,6 +341,21 @@ svg { display: block; }
 .waving .wing-r { transform-origin: 150px 96px; animation: flap 1s ease-in-out infinite; }
 @keyframes flap { 0%, 100% { transform: rotate(-72deg); } 50% { transform: rotate(-112deg); } }
 .hero-bird { position: absolute; width: 30%; aspect-ratio: 1; left: -3%; bottom: 3%; pointer-events: none; }
+/* CV button: the mascot's perch on desktop (its feet land on the pill's top edge, and the pill
+   shares a row with the stage hint); in the CTA row on mobile (see the 860px breakpoint) */
+.stage-cv { position: absolute; left: -3%; width: 30%; top: 94.5%; display: flex; justify-content: center; }
+.stage-cv .btn { white-space: nowrap; }
+/* the perch is a wooden plank: grain lines, one knot, and a darker edge where .btn has its shadow */
+.btn.wood {
+  color: #4A2A12; border-color: #8B5A3C; border-radius: 14px; box-shadow: 0 6px 0 #8B5A3C;
+  background:
+    radial-gradient(ellipse 8px 4px at 14% 70%, #B57B45 0 28%, transparent 32% 52%, #C48A4F 56% 82%, transparent 88%),
+    repeating-linear-gradient(177deg, transparent 0 7px, rgba(139, 90, 60, .2) 7px 8.5px),
+    linear-gradient(#EDBE85, #D99F62);
+}
+.btn.wood:hover { transform: translateY(-2px); box-shadow: 0 8px 0 #8B5A3C; }
+.btn.wood:active { transform: translateY(4px); box-shadow: 0 2px 0 #8B5A3C; }
+@media (min-width: 861px) { .cta .cv-btn { display: none; } }
 
 .wave-divider { position: absolute; left: 0; bottom: -1px; width: 100%; height: 72px; fill: var(--page); }
 
@@ -725,6 +740,29 @@ html:has(.demo[open]) { overflow: hidden; }
 .demo-close .ic { width: 18px; height: 18px; }
 .demo-note { font-size: .84rem; line-height: 1.45; text-align: center; max-width: 30em; }
 
+/* CV popup (js/cv.js): the demo dialog's shell, with the suited mascot beside the PDF */
+.cv-box { width: min(920px, 100%); display: grid; grid-template-columns: 190px minmax(0, 1fr); grid-template-areas: "head head" "side paper" "side open"; align-items: stretch; gap: 14px 18px; }
+.cv-box .demo-head { grid-area: head; }
+.cv-side { grid-area: side; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 16px; }
+.cv-say { position: relative; padding: 10px 14px; font-family: var(--font-display); font-weight: 500; font-size: .98rem; line-height: 1.35; text-align: center; color: var(--ink); background: var(--cloud); border: 2px solid var(--line); border-radius: 18px; }
+.cv-say::after { content: ""; position: absolute; left: 50%; bottom: -9px; width: 14px; height: 14px; background: inherit; border-right: 2px solid var(--line); border-bottom: 2px solid var(--line); transform: translateX(-50%) rotate(45deg); }
+.cv-bird { flex: none; width: 170px; aspect-ratio: 1; }
+.cv-paper { grid-area: paper; position: relative; height: min(640px, calc(100vh - 220px)); min-height: 280px; border: 2px solid var(--line); border-radius: 20px; overflow: hidden; background: var(--cloud); }
+@supports (height: 100dvh) { .cv-paper { height: min(640px, calc(100dvh - 220px)); } }
+.cv-paper iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.cv-loading { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--font-mono); font-size: .84rem; font-weight: 700; color: var(--link); }
+.cv-open { grid-area: open; justify-self: end; font-size: .95rem; padding: 9px 20px; margin-bottom: 6px; }
+@media (max-width: 860px) {
+  .cv-box { grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "side" "paper" "open"; gap: 10px; }
+  .cv-side { flex-direction: row-reverse; justify-content: flex-end; gap: 14px; }
+  .cv-bird { width: 68px; }
+  .cv-say { text-align: left; font-size: .9rem; padding: 8px 12px; }
+  .cv-say::after { left: -9px; bottom: auto; top: 50%; transform: translateY(-50%) rotate(135deg); }
+  .cv-paper { height: calc(100vh - 290px); }
+  @supports (height: 100dvh) { .cv-paper { height: calc(100dvh - 290px); } }
+  .cv-open { justify-self: stretch; justify-content: center; }
+}
+
 .demo-phone {
   position: relative; width: min(318px, 100%); height: min(610px, calc(100vh - 236px)); min-height: 440px;
   padding: 9px; border-radius: 42px; background: var(--bezel);
@@ -895,9 +933,13 @@ html:has(.demo[open]) { overflow: hidden; }
 
 /* mascot: poses, eyes that follow the pointer, speech bubble */
 .bird .acc { display: none; }
-.pose-grad .acc-cap, .pose-medal .acc-medal { display: inline; }
+.pose-grad .acc-cap, .pose-medal .acc-medal, .pose-suit .acc-suit { display: inline; }
 [data-dark] .acc-cap .cap-top { fill: #3C5F8A; }
 [data-dark] .acc-cap .cap-base { fill: #55789F; }
+/* the suit's sleeves are the wings, recoloured */
+.pose-suit :is(.wing-l, .wing-r) ellipse { fill: #163E66; }
+[data-dark] .acc-suit .suit-coat, [data-dark] .pose-suit :is(.wing-l, .wing-r) ellipse { fill: #3C5F8A; }
+[data-dark] .acc-suit .suit-lapel { fill: #55789F; }
 .bird .pupils { transform: translate(var(--px, 0px), var(--py, 0px)); transition: transform .12s ease-out; }
 /* only the bird's painted shape takes clicks, so its square box never blocks what is behind it */
 .talks { pointer-events: none; -webkit-tap-highlight-color: transparent; }
@@ -1122,6 +1164,7 @@ html:has(.demo[open]) { overflow: hidden; }
   .hero { padding: 118px 0 110px; }
   .hero-grid { grid-template-columns: 1fr; gap: 12px; }
   .stage { max-width: 420px; order: -1; margin-bottom: 8px; }
+  .stage-cv { display: none; }
   .code-card { margin-top: 32px; }
   .wave-divider { height: 44px; }
 
