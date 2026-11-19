@@ -1,8 +1,11 @@
 /* Playable phone demos. The "play" chips under the MedRoyale and Kalorize
-   phones open a dialog with a big phone running a tiny toy version of the app:
+   phones, and on the publication card, open a dialog with a big phone running
+   a tiny toy version of the app:
      quiz — a 3-question 1v1 match against the bird mascot
      kal  — answer three questions, get a menu for pagi / siang / malam,
             and tap each meal to fill the calorie ring
+     rank — a 5,000-player leaderboard in pages of 100: a binary search finds
+            the page with your rank, and other pages load only when scrolled to
    Each demo is a mount(screen) function that returns { stop } for cleanup. */
 (function () {
   'use strict';
@@ -539,6 +542,200 @@
     return { stop: stop, focus: firstFocus };
   }
 
+  /* ───────── MedRoyale leaderboard: binary-search to your own page ───────── */
+
+  var PLAYERS = 5000;
+  var PER_PAGE = 100; // the leaderboard loads 100 players per page
+  var MY_RANK = 3482;
+  var NAME_A = ['Swift', 'Calm', 'Brave', 'Sharp', 'Kind', 'Bright', 'Steady', 'Quick', 'Bold', 'Keen'];
+  var NAME_B = ['Scalpel', 'Neuron', 'Pulse', 'Femur', 'Synapse', 'Aorta', 'Cortex', 'Retina', 'Tibia'];
+  function fmt(n) { return n.toLocaleString('en-US'); }
+
+  function mountRank(root) {
+    var alive = true;
+    var raf = 0;
+    var scrollRaf = 0;
+    var pages = Math.ceil(PLAYERS / PER_PAGE);
+    var myPage = Math.ceil(MY_RANK / PER_PAGE);
+    var first = 0;     // loaded pages run from first to last; the rest are not in the DOM
+    var last = 0;
+    var meRow = null;  // my row, while its page is loaded
+    var atMe = false;  // is my row on screen?
+    var busy = false;  // a search is running
+
+    function stop() { alive = false; cancelAnimationFrame(raf); cancelAnimationFrame(scrollRaf); }
+
+    var pill = el('span', 'd-pill', '');
+    var top = el('div', 'd-top');
+    top.appendChild(el('b', '', 'Leaderboard'));
+    top.appendChild(pill);
+
+    // One cell per page: which are loaded, and where the search is looking
+    var strip = el('div', 'r-pages');
+    strip.setAttribute('aria-hidden', 'true');
+    var cells = [];
+    for (var c = 0; c < pages; c++) { cells.push(el('i')); strip.appendChild(cells[c]); }
+
+    var list = el('div', 'r-list');
+    list.tabIndex = 0;
+    list.setAttribute('role', 'list');
+    list.setAttribute('aria-label', 'Leaderboard, ' + fmt(PLAYERS) + ' players');
+
+    var status = el('p', 'r-status', pages + ' pages of ' + PER_PAGE + ' players. Scroll, or jump to your rank.');
+    status.setAttribute('role', 'status');
+    var go = el('button', 'd-btn', 'Go to my position');
+    go.type = 'button';
+
+    root.appendChild(top);
+    root.appendChild(strip);
+    root.appendChild(list);
+    root.appendChild(status);
+    root.appendChild(go);
+
+    function range(p) { return '#' + fmt((p - 1) * PER_PAGE + 1) + '–#' + fmt(Math.min(p * PER_PAGE, PLAYERS)); }
+
+    // Players are made up on the spot from their rank
+    function row(i) {
+      var mine = i === MY_RANK - 1;
+      var node = el('div', 'r-row' + (mine ? ' me' : ''));
+      node.setAttribute('role', 'listitem');
+      node.appendChild(el('span', 'r-rank', '#' + fmt(i + 1)));
+      var ava = el('span', 'r-ava'); // every player is the mascot, on a different colour
+      ava.style.setProperty('--c', CANDY[i % CANDY.length]);
+      ava.appendChild(bird());
+      node.appendChild(ava);
+      node.appendChild(el('span', 'r-name', mine ? 'You' : NAME_A[(i * 7 + 3) % NAME_A.length] + NAME_B[(i * 13 + 5) % NAME_B.length] + ((i * 37) % 90 + 10)));
+      node.appendChild(el('span', 'r-pts', fmt(15000 - i * 3 + (i * 7) % 3) + ' pts'));
+      if (mine) meRow = node;
+      return node;
+    }
+    function page(p) {
+      var box = el('div', 'r-page');
+      box.appendChild(el('p', 'r-page-tag', 'Page ' + p + ' · ' + range(p)));
+      for (var i = (p - 1) * PER_PAGE; i < Math.min(p * PER_PAGE, PLAYERS); i++) box.appendChild(row(i));
+      return box;
+    }
+
+    // The strip, the counter and the button follow what is loaded and where the list is
+    function sync() {
+      cells.forEach(function (cell, i) { cell.classList.toggle('loaded', i + 1 >= first && i + 1 <= last); });
+      pill.textContent = fmt(Math.min(last * PER_PAGE, PLAYERS) - (first - 1) * PER_PAGE) + ' of ' + fmt(PLAYERS) + ' loaded';
+      var mid = meRow && meRow.isConnected ? meRow.offsetTop + meRow.offsetHeight / 2 : -1;
+      atMe = mid > list.scrollTop && mid < list.scrollTop + list.clientHeight;
+      if (!busy) go.textContent = atMe ? 'Back to the top' : 'Go to my position';
+    }
+    // Drop every loaded page and load just this one
+    function show(p) {
+      list.textContent = '';
+      meRow = null;
+      list.appendChild(page(p));
+      first = last = p;
+    }
+    function centre() {
+      if (meRow) list.scrollTop = meRow.offsetTop - (list.clientHeight - meRow.offsetHeight) / 2;
+    }
+
+    // Neighbouring pages only load when the list is scrolled to their edge
+    list.addEventListener('scroll', function () {
+      if (scrollRaf) return;
+      scrollRaf = requestAnimationFrame(function () {
+        scrollRaf = 0;
+        if (!alive || busy) return;
+        if (list.scrollTop < 60 && first > 1) {
+          var before = list.scrollHeight;
+          first -= 1;
+          list.insertBefore(page(first), list.firstChild);
+          list.scrollTop += list.scrollHeight - before; // stay on the row being read
+          status.textContent = 'Scrolled up, so page ' + first + ' (' + range(first) + ') loaded.';
+        } else if (list.scrollTop + list.clientHeight > list.scrollHeight - 60 && last < pages) {
+          last += 1;
+          list.appendChild(page(last));
+          status.textContent = 'Scrolled down, so page ' + last + ' (' + range(last) + ') loaded.';
+        }
+        sync();
+      });
+    });
+
+    // Scroll the list from one offset to another
+    function glide(from, to, ms, ease, done) {
+      if (calm) { list.scrollTop = to; done(); return; }
+      var t0 = null;
+      list.scrollTop = from;
+      raf = requestAnimationFrame(function step(now) {
+        if (!alive) return;
+        if (t0 === null) t0 = now;
+        var t = Math.max(0, Math.min(1, (now - t0) / ms));
+        list.scrollTop = from + (to - from) * ease(t);
+        if (t < 1) raf = requestAnimationFrame(step); else done();
+      });
+    }
+    function easeInOut(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+
+    // Binary search over the pages: halve the range until the page holding my rank turns up.
+    // Each page it checks on the way is loaded on its own and scrolled through, towards where the
+    // search goes next; the page that holds my rank opens straight at my row.
+    function search() {
+      var lo = 1;
+      var hi = pages;
+      var lookups = 0;
+      busy = true;
+      go.textContent = 'Searching…';
+      (function probe() {
+        var mid = Math.floor((lo + hi) / 2);
+        lookups += 1;
+        cells.forEach(function (cell, i) {
+          cell.classList.remove('found');
+          cell.classList.toggle('probe', i + 1 === mid);
+          cell.classList.toggle('out', i + 1 < lo || i + 1 > hi);
+        });
+        show(mid);
+        sync();
+        if (mid === myPage) { // the row's place in its page is known, so jump straight to it
+          centre();
+          land(lookups);
+          return;
+        }
+        var bottom = list.scrollHeight - list.clientHeight;
+        var down = myPage > mid;
+        status.textContent = 'Lookup ' + lookups + ' · page ' + mid + ' · you’re further ' + (down ? 'down' : 'up');
+        if (down) lo = mid + 1; else hi = mid - 1;
+        glide(down ? 0 : bottom, down ? bottom : 0, 420, easeInOut, probe);
+      })();
+    }
+    function land(lookups) {
+      cells.forEach(function (cell, i) {
+        cell.classList.remove('probe', 'out');
+        cell.classList.toggle('found', i + 1 === myPage);
+      });
+      busy = false;
+      sync();
+      status.textContent = 'You’re #' + fmt(MY_RANK) + '. Found in ' + lookups + ' lookups; 1 of ' + pages + ' pages loaded.';
+      if (meRow) replay(meRow, 'found');
+    }
+
+    go.addEventListener('click', function () {
+      if (busy) return;
+      if (atMe) {
+        show(1);
+        list.scrollTop = 0;
+        cells.forEach(function (cell) { cell.classList.remove('found'); });
+        status.textContent = 'Back at #1, with only page 1 loaded.';
+        sync();
+      } else if (meRow && meRow.isConnected) { // my page is already loaded: no search needed
+        centre();
+        sync();
+        status.textContent = 'You’re #' + fmt(MY_RANK) + '. Your page was already loaded.';
+        replay(meRow, 'found');
+      } else {
+        search();
+      }
+    });
+
+    show(1);
+    sync();
+    return { stop: stop, focus: go };
+  }
+
   /* ───────── The dialog ───────── */
 
   var DEMOS = {
@@ -551,6 +748,11 @@
       title: 'Kalorize',
       note: 'A toy version for this page: three questions and rough estimates. The real app used machine-learning APIs for its nutrition analysis.',
       mount: mountKal
+    },
+    rank: {
+      title: 'MedRoyale leaderboard',
+      note: 'A toy version for this page: 5,000 made-up players, 100 per page. As in the real app, a binary search finds the page with your rank, and the pages above and below only load when you scroll to them.',
+      mount: mountRank
     }
   };
   var running = null;
@@ -582,8 +784,9 @@
   document.querySelectorAll('.play-chip[data-demo]').forEach(function (chip) {
     var kind = chip.getAttribute('data-demo');
     chip.addEventListener('click', function () { open(kind); });
-    // The little phone is a bigger, mouse-friendly target for the same button
-    var phone = chip.parentElement.querySelector('.phone');
+    // The little phone (or the line of text the chip sits in) is a bigger,
+    // mouse-friendly target for the same button
+    var phone = chip.parentElement.querySelector('.phone') || chip.closest('.ribbon');
     if (phone) {
       phone.classList.add('playable');
       phone.addEventListener('click', function () { chip.focus({ preventScroll: true }); open(kind); });
