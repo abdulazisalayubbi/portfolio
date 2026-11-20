@@ -1,6 +1,7 @@
 /* Playful extras layered on top of main.js:
    - a Flutter-style DEBUG ribbon that toggles "debug paint"
    - the Awards dartboard, which picks one award and tells its story
+     (after that, clicking any other award card tells that one's story)
    - a livelier mascot: eyes that follow the pointer, speech bubbles
    - a dart that rides the Journey timeline as you scroll
    - click-to-copy on the email, with confetti
@@ -227,6 +228,8 @@
     var spotTitle = document.getElementById('spot-title');
     var spotMeta = document.getElementById('spot-meta');
     var spotStory = document.getElementById('spot-story');
+    var spotTag = spot.querySelector('.tag');
+    var dartTag = spotTag ? spotTag.textContent : ''; // "The dart picked"
     var pin = spot.querySelector('.award-pin').cloneNode(true); // the dart stuck in the chosen card
     var queue = [];
     var current = null;
@@ -240,16 +243,35 @@
           var j = Math.floor(Math.random() * (i + 1));
           var swap = queue[i]; queue[i] = queue[j]; queue[j] = swap;
         }
-        if (queue[0] === current && queue.length > 1) queue.push(queue.shift());
       }
+      // never the one already showing (it may have been picked by hand)
+      if (queue[0] === current && queue.length > 1) queue.push(queue.shift());
       return queue.shift();
     };
 
-    var reveal = function (card) {
+    // While an award is in the spotlight the cards act as buttons, so
+    // another one can be picked by hand
+    var setPickable = function (on) {
+      awardCards.forEach(function (c) {
+        if (on) {
+          c.tabIndex = 0;
+          c.setAttribute('role', 'button');
+          c.setAttribute('aria-pressed', String(c === current));
+        } else {
+          c.removeAttribute('tabindex');
+          c.removeAttribute('role');
+          c.removeAttribute('aria-pressed');
+        }
+      });
+    };
+
+    var reveal = function (card, byHand) {
       current = card;
       awardCards.forEach(function (c) { c.classList.toggle('picked', c === card); });
       grid.classList.add('has-pick');
+      setPickable(true);
       card.appendChild(pin);
+      if (spotTag) spotTag.textContent = byHand ? 'You picked' : dartTag;
 
       var medal = card.querySelector('.medal');
       var title = card.querySelector('h3');
@@ -275,17 +297,33 @@
       var off = Math.random() * 13;
       if (dartSpot) dartSpot.setAttribute('transform', 'translate(' + (Math.cos(angle) * off).toFixed(1) + ' ' + (Math.sin(angle) * off).toFixed(1) + ')');
       restart(board, 'thrown');
+      if (window.sfx) window.sfx.dart(calm ? 0 : 250); // lands 60% into award-throw
       setTimeout(function () {
         flying = false;
         reveal(card);
       }, calm ? 0 : 420);
     };
 
+    // Clicking a card moves the dart, and the spotlight, to that award
+    var choose = function (card) {
+      if (flying || !current || card === current) return;
+      reveal(card, true);
+    };
+    awardCards.forEach(function (card) {
+      card.addEventListener('click', function () { choose(card); });
+      card.addEventListener('keydown', function (e) {
+        if (!current || e.target !== card || (e.key !== 'Enter' && e.key !== ' ')) return;
+        e.preventDefault();
+        choose(card);
+      });
+    });
+
     var clearPick = function () {
-      var hadFocus = spot.contains(document.activeElement);
+      var hadFocus = spot.contains(document.activeElement) || grid.contains(document.activeElement);
       current = null;
       awardCards.forEach(function (c) { c.classList.remove('picked'); });
       grid.classList.remove('has-pick');
+      setPickable(false);
       pin.remove();
       spot.hidden = true;
       if (hadFocus) board.focus({ preventScroll: true });

@@ -1,6 +1,7 @@
 /* Intro splash: a one-button darts game. A crosshair sweeps over the board;
    every dart that lands adds to a "build" bar (the nearer the bullseye, the
-   more it adds) and at 100% the page irises open from the board.
+   more it adds) and at 100% the bird carries the splash off sideways, like a
+   page being swapped for the next one.
    The inline script in <head> decides whether the intro shows on load:
    once per session, never for reduced-motion visitors or deep links. */
 (function () {
@@ -32,6 +33,7 @@
   var SWEEP = 1.7;     // in/out speed, rad/s — it crosses the bullseye every ~1.8s
   var TURN = 0.6;      // how fast the sweep line itself rotates, rad/s
   var COOLDOWN = 380;  // ms between throws
+  var CARRY_MS = 1600; // length of the intro-carry animation in style.css
 
   // Rings from the centre outwards: radius, build progress gained, label
   var ZONES = [
@@ -51,6 +53,7 @@
   var raf = 0;
   var timers = [];
   var returnFocus = null; // the footer button, when the intro was replayed from it
+  var runner = null;      // a copy of the bird that carries the splash away
 
   function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
   function clearTimers() { timers.forEach(clearTimeout); timers = []; }
@@ -163,6 +166,7 @@
     updateHud();
     restartAnimation(board, 'hit');
     restartAnimation(bird, 'cheer');
+    if (window.sfx) window.sfx.dart(calm ? 0 : 185, zone.bull || progress >= 100); // lands 62% into intro-thunk; sparkles on a bullseye or the winning dart
 
     if (progress >= 100) win();
   }
@@ -173,10 +177,11 @@
     statusEl.textContent = '✓ Built in ' + plural(darts);
     countEl.textContent = 'Launching…';
     confetti();
-    later(function () { exit(false); }, 1250);
+    later(function () { exit(false); }, 1100);
   }
 
-  // ── Leaving: an iris opens from the bullseye and the page shows through
+  // ── Leaving. After a win the bird takes the splash by its edge and carries
+  //    it off to the side; on Skip an iris opens from the bullseye instead.
   function setMask(value) {
     intro.style.webkitMaskImage = value;
     intro.style.maskImage = value;
@@ -186,7 +191,38 @@
     cancelAnimationFrame(raf);
     root.classList.remove('intro-out');
     setMask('');
+    dropRunner();
     state = 'idle';
+  }
+
+  function dropRunner() {
+    if (runner) runner.remove();
+    runner = null;
+    bird.style.visibility = '';
+    intro.classList.remove('carry');
+  }
+
+  // A copy of the bird, outside the splash so it can stand astride its edge:
+  // it hops to the left edge, then grows as it walks it right across the screen
+  function carry() {
+    var b = bird.getBoundingClientRect();
+    var grow = Math.max(1.3, Math.min(2.4, root.clientWidth * 0.6 / b.width)); // never wider than 60% of the screen
+    var go = root.clientWidth + b.width * grow / 2 + 24; // far enough for bird and splash to clear the screen
+    runner = bird.cloneNode(true);
+    runner.removeAttribute('id');
+    runner.className = 'bird-slot intro-runner';
+    runner.style.left = b.left.toFixed(1) + 'px';
+    runner.style.top = b.top.toFixed(1) + 'px';
+    runner.style.width = b.width.toFixed(1) + 'px';
+    runner.style.height = b.height.toFixed(1) + 'px';
+    runner.style.setProperty('--dx', (-b.left - b.width / 2).toFixed(1) + 'px'); // to the splash's left edge
+    runner.style.setProperty('--go', go.toFixed(1) + 'px');
+    runner.style.setProperty('--grow', grow.toFixed(2));
+    intro.style.setProperty('--go', go.toFixed(1) + 'px');
+    document.body.appendChild(runner);
+    bird.style.visibility = 'hidden';
+    intro.classList.add('carry');
+    later(finishExit, CARRY_MS + 50);
   }
 
   function exit(fast) {
@@ -202,13 +238,14 @@
     if (returnFocus) returnFocus.focus({ preventScroll: true });
 
     if (calm) return finishExit();
+    if (!fast) return carry();
 
     var box = intro.getBoundingClientRect();
     var b = board.getBoundingClientRect();
     var ox = b.left + b.width / 2 - box.left;
     var oy = b.top + b.height / 2 - box.top;
     var reach = Math.sqrt(Math.pow(Math.max(ox, box.width - ox), 2) + Math.pow(Math.max(oy, box.height - oy), 2)) + 4;
-    var duration = fast ? 450 : 750;
+    var duration = 450;
     var began = performance.now();
 
     function iris(now) {
@@ -230,6 +267,7 @@
     intro.classList.remove('won');
     board.classList.remove('hit');
     bird.classList.remove('cheer');
+    dropRunner();
     setMask('');
     intro.scrollTop = 0;
 
